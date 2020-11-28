@@ -1,4 +1,3 @@
-
 class color(object):
   def __init__(self, r, g, b):
     self.r = r
@@ -26,5 +25,8 @@ class color(object):
     self.g = int(max(min(self.g, 255), 0))
     self.b = int(max(min(self.b, 255), 0))
     return bytes([self.b, self.g, self.r])
+
+  def equals(self, other):
+    return (self.r==other.r and self.g==other.g and self.b==other.b)
 
   __rmul__ = __mul__

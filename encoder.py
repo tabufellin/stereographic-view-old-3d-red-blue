@@ -5,7 +5,7 @@ def char(myChar):
 
 def word(myChar):
 	return struct.pack('=h', myChar)
-
+	
 def dword(myChar):
 	return struct.pack('=l', myChar)
 

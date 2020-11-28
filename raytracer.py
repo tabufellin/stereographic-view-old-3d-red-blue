@@ -108,21 +108,24 @@ class Raytracer(object):
 
     return material, intersect
 
-  def render(self,stereogram=False):
+  def render(self, stereographic=False):
     fov = int(pi/2)
     for y in range(self.height):
       for x in range(self.width):
         i =  (2*(x + 0.5)/self.width - 1) * tan(fov/2) * self.width/self.height
         j =  (2*(y + 0.5)/self.height - 1) * tan(fov/2)
         direction = norm(V3(i, j, -1))
-        if(stereogram):
-          eye1 = self.cast_ray(V3(0.4,0,0), direction)
-          eye2 = self.cast_ray(V3(-0.4,0,0), direction)
-          if not eye1.equals(self.background_color):
-            eye1 = eye1*0.57 + color(100,0,0)                                          #times 0.57 for it to not exceed 255 
-          if not eye2.equals(self.background_color):
-            eye2 = eye2*0.57 + color(0,0,100)                                          #times 0.57 for it to not exceed 255  
-          eye_sum = eye1 + eye2
-          self.pixels[y][x] = eye_sum
+
+        if(stereographic):
+          right_eye = self.cast_ray(V3(0.2,0,0), direction)
+          left_eye = self.cast_ray(V3(-0.2,0,0), direction)
+          if not right_eye.equals(self.background_color):
+            right_eye = right_eye+ color(100,0,0)                                    
+          if not left_eye.equals(self.background_color):
+            left_eye = left_eye + color(0,0,100)                                            
+          self.pixels[y][x] = right_eye + left_eye
+
         else:
           self.pixels[y][x] = self.cast_ray(V3(1,0,0), direction)
+
+        
